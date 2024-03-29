@@ -32,7 +32,7 @@ def send_email(db_entries, to_mail: str):
     for i in db_entries:
         msg.attach(
             MIMEText(
-                f"{i[1]} , {i[2]} , {i[4]}",
+                f"{i[1]}  {i[2]}  {i[4]}",
                 "plain",
             )
         )
