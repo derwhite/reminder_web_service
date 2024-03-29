@@ -7,7 +7,7 @@ import json
 import smtplib
 
 db_file = "my_db.duckdb"
-mail_data = json.loads(open("mail_login.json").read())
+mail_data = json.loads(open(os.path.join(os.path.dirname(__file__), "mail_login.json")).read())
 
 
 def main():
