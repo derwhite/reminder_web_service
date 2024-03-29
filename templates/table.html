@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entries</title>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        width: 1em;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+        background-color: lightgray;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    button {
+        background-color: black;
+        color: red;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: red;
+        color: black;
+    }
+</style>
+</head>
+<body>
+    <table>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry[1] }}</td>
+            <td>{{ entry[2] }}</td>
+            <td>{{ entry[3] }}</td>
+            <td>{{ entry[4] }}</td>
+            <td><form action="/delete/{{ entry[0] }}" method="post">
+                <button type="submit">X</button>
+            </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

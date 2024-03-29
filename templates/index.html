@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reminder Me</title>
+<style>
+  body {
+    background-color: lightblue;
+  }
+  input[type="text"] {
+    height: 30px;
+    width: 200px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: lightblue;
+  }
+  button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  iframe {
+    border: none;
+    width: 80%;
+  }
+  #results {
+    margin-top: 20px;
+    text-align: center;
+  }
+  #container {
+    display: flex;
+    text-align: center;
+  }
+  #left {
+    margin-left: auto;
+  }
+  #right {
+    margin-right: auto;
+  }
+  h1 {
+    text-align: center;
+    padding-top: 20px;
+  }
+</style>
+</head>
+<body>
+<h1>Reminder Me</h1>
+<div id="container">
+<div id="left">
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Enter your search query">
+    <button type="submit">Search</button>
+  </form>
+</div>
+<div id="right">
+  <form id="add">
+    <button type="submit">Add</button>
+  </form>
+</div>
+</div>
+<div id="results">
+  <iframe id="searchResults" src="/get/all" width="800" height="600" frameborder="0"></iframe>
+</div>
+<script>
+  // Function to handle the form submission
+  document.getElementById("searchForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    search(); // Call the search function
+  });  
+  document.getElementById("add").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    add(); // Call the search function
+  });
+
+  // Function to handle the search
+  function search() {
+    var searchQuery = document.getElementById("searchInput").value;
+    var iframe = document.getElementById("searchResults");
+    var query = encodeURIComponent(searchQuery);
+    if (searchQuery === "") {
+      iframe.src = "/get/all";
+      return;
+    }
+    iframe.src = "/get/" + encodeURIComponent(searchQuery);
+  }
+  function add() {
+    var iframe = document.getElementById("searchResults");
+    iframe.src = "/new";
+  }
+</script>
+
+</body>
+</html>

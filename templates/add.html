@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entries</title>
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        margin: 0 auto;
+    }
+    label {
+        margin-top: 10px;
+    }
+    input {
+        margin-top: 5px;
+        border-radius: 5px;
+        border: none;
+        height: 30px;
+    }
+    button {
+        margin-top: 30px;
+        width: 100%;
+        height: 40px;
+        align-self: center;
+        background-color: #4CAF50;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    h2 {
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <h2>Add Entry</h2>
+    <form action="/add" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment" name="comment" required><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
