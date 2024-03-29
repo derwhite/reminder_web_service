@@ -5,6 +5,7 @@ import duckdb
 from datetime import datetime
 import os
 import json
+from waitress import serve
 
 db_file = "my_db.duckdb"
 
@@ -112,4 +113,5 @@ if __name__ == "__main__":
             "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, name VARCHAR, comment VARCHAR, email VARCHAR, date DATE)"
         )
     # Run the Flask app
-    app.run(debug=True)
+    # app.run(debug=True)
+    serve(app, host="127.0.0.1", port=6001)
