@@ -28,16 +28,12 @@ def send_email(db_entries, to_mail: str):
         msg["Cc"] = mail_data["always_send_to"]
     msg["Subject"] = f"REMINDER !! Christoph !!"
 
-    # Attach the message body
-    msg.attach(MIMEText(f"Moin moin,\n\nHier mal ne kleine Erinnerung an:", "plain"))
-
+    text = []
     for i in db_entries:
-        msg.attach(
-            MIMEText(
-                f"{i[1]}  {i[2]}  {i[4]}",
-                "plain",
-            )
-        )
+        text.append(f"{i[1]}  {i[2]}  {i[4]}")
+    # Attach the message body
+    msg.attach(MIMEText(f"Moin moin,\n\nHier mal ne kleine Erinnerung an:\n\n{"\n".join(text)}", "plain"))
+
     with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         smtp.starttls()
         smtp.login(mail_data["gmail_name"], mail_data["gmail_password"])
