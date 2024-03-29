@@ -8,6 +8,7 @@ import json
 from waitress import serve
 
 db_file = "my_db.duckdb"
+db = os.path.join(os.path.dirname(__file__), db_file)
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -35,7 +36,7 @@ def new():
 @app.route("/get/<str_x>")
 @auth.login_required
 def get(str_x):
-    with duckdb.connect(os.path.join(os.path.dirname(__file__), db_file)) as conn:
+    with duckdb.connect(db) as conn:
         if str_x == "all" or str_x == "":
             entries = conn.execute("SELECT * FROM entries order by date").df()
         else:
@@ -61,7 +62,7 @@ def add_entry():
     email = request.form["email"]
     date_str = request.form["date"]
     date = datetime.strptime(date_str, "%Y-%m-%d").date()
-    with duckdb.connect(os.path.join(os.path.dirname(__file__), db_file)) as conn:
+    with duckdb.connect(db) as conn:
         ids = conn.execute("select id from entries").df()["id"].tolist()
         print("AAAAA", ids)
         if ids == []:
@@ -81,7 +82,7 @@ def add_entry():
 @auth.login_required
 def delete_entry(id):
     # Delete an entry from the database
-    with duckdb.connect(os.path.join(os.path.dirname(__file__), db_file)) as conn:
+    with duckdb.connect(db) as conn:
         conn.execute("DELETE FROM entries WHERE id = $id", {"id": id})
     return "deleted !"
 
@@ -108,7 +109,7 @@ def next_index(x, _from=None):
 
 if __name__ == "__main__":
     # Create the database table if it doesn't exist
-    with duckdb.connect(os.path.join(os.path.dirname(__file__), db_file)) as conn:
+    with duckdb.connect(db) as conn:
         conn.execute(
             "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, name VARCHAR, comment VARCHAR, email VARCHAR, date DATE)"
         )
