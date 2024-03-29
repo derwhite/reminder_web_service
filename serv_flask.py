@@ -11,7 +11,7 @@ db_file = "my_db.duckdb"
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
-login = json.loads(open("login.json").read())
+login = json.load(open(os.path.join(os.path.dirname(__file__), "login.json")))
 
 
 @auth.verify_password
