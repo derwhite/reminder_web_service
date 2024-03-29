@@ -24,6 +24,8 @@ def send_email(db_entries, to_mail: str):
     msg = MIMEMultipart()
     msg["From"] = mail_data["gmail_name"]
     msg["To"] = to_mail
+    if "always_send_to" in mail_data:
+        msg["Cc"] = mail_data["always_send_to"]
     msg["Subject"] = f"REMINDER !! Christoph !!"
 
     # Attach the message body
@@ -39,7 +41,10 @@ def send_email(db_entries, to_mail: str):
     with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         smtp.starttls()
         smtp.login(mail_data["gmail_name"], mail_data["gmail_password"])
-        smtp.sendmail(mail_data["gmail_name"], to_mail, msg.as_string())
+        if "always_send_to" in mail_data:
+            smtp.sendmail(mail_data["gmail_name"], [to_mail, mail_data["always_send_to"]], msg.as_string())
+        else:
+            smtp.sendmail(mail_data["gmail_name"], to_mail, msg.as_string())
 
 
 if __name__ == "__main__":
