@@ -1,3 +1,5 @@
 .vscode
 login.json
 my_db.duckdb
+mail_login.json
+__pycache__
