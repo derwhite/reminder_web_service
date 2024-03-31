@@ -56,7 +56,6 @@ def get(str_x):
 @app.route("/add", methods=["POST"])
 @auth.login_required
 def add_entry():
-    # Insert a new entry into the database
     name = request.form["name"]
     comment = request.form["comment"]
     email = request.form["email"]
@@ -64,12 +63,10 @@ def add_entry():
     date = datetime.strptime(date_str, "%Y-%m-%d").date()
     with duckdb.connect(db) as conn:
         ids = conn.execute("select id from entries").df()["id"].tolist()
-        print("AAAAA", ids)
         if ids == []:
             id = 1
         else:
             id = next_index(ids, 1)
-            print(ids, id)
         conn.execute(
             "INSERT INTO entries VALUES ($id, $name, $comment, $email, $date)",
             {"id": id, "name": name, "comment": comment, "email": email, "date": date},
@@ -81,7 +78,6 @@ def add_entry():
 @app.route("/delete/<int:id>", methods=["POST"])
 @auth.login_required
 def delete_entry(id):
-    # Delete an entry from the database
     with duckdb.connect(db) as conn:
         conn.execute("DELETE FROM entries WHERE id = $id", {"id": id})
     return "deleted !"
@@ -108,11 +104,8 @@ def next_index(x, _from=None):
 
 
 if __name__ == "__main__":
-    # Create the database table if it doesn't exist
     with duckdb.connect(db) as conn:
         conn.execute(
             "CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY, name VARCHAR, comment VARCHAR, email VARCHAR, date DATE)"
         )
-    # Run the Flask app
-    # app.run(debug=True)
     serve(app, host="127.0.0.1", port=6001)
