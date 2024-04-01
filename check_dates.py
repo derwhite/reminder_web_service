@@ -13,14 +13,15 @@ mail_data = json.loads(open(os.path.join(os.path.dirname(__file__), "mail_login.
 def main():
     with duckdb.connect(os.path.join(os.path.dirname(__file__), db_file)) as conn:
         today = date.today()
-        results = conn.execute("select * from entries where date <= $date", {"date": today}).df()
+        results = conn.execute("select * from entries where date <= $date", {"date": today.strftime("%Y-%m-%d")}).df()
         if len(results) > 0:
+            mail_list = results["email"].unique().tolist()
             results["date"] = results["date"].dt.strftime("%d.%m.%Y")
-            send_email(results.values.tolist(), results["email"].loc[0])
+            for i in mail_list:
+                send_email(results[results["email"] == i].values.tolist(), i)
 
 
 def send_email(db_entries, to_mail: str):
-    # Create a multipart message
     msg = MIMEMultipart()
     msg["From"] = mail_data["gmail_name"]
     msg["To"] = to_mail
@@ -31,7 +32,6 @@ def send_email(db_entries, to_mail: str):
     text = []
     for i in db_entries:
         text.append(f"{i[1]}  {i[2]}  {i[4]}")
-    # Attach the message body
     msg.attach(MIMEText(f"Moin moin,\n\nHier mal ne kleine Erinnerung an:\n\n{"\n".join(text)}", "plain"))
 
     with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
