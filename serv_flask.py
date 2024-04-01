@@ -32,6 +32,7 @@ def index():
 def edit(id):
     with duckdb.connect(db) as conn:
         entry = conn.execute("SELECT * FROM entries WHERE id = $id", {"id": id}).df()
+        print(entry.values.tolist()[0])
     return render_template("edit.html", entry=entry.values.tolist()[0])
 
 
