@@ -27,6 +27,30 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/edit/<int:id>", methods=["POST"])
+@auth.login_required
+def edit(id):
+    with duckdb.connect(db) as conn:
+        entry = conn.execute("SELECT * FROM entries WHERE id = $id", {"id": id}).df()
+    return render_template("edit.html", entry=entry.values.tolist()[0])
+
+
+@app.route("/update/<int:id>", methods=["POST"])
+@auth.login_required
+def update(id):
+    name = request.form["name"]
+    comment = request.form["comment"]
+    email = request.form["email"]
+    date_str = request.form["date"]
+    date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    with duckdb.connect(db) as conn:
+        conn.execute(
+            "UPDATE entries SET name = $name, comment = $comment, email = $email, date = $date WHERE id = $id",
+            {"id": id, "name": name, "comment": comment, "email": email, "date": date},
+        )
+    return redirect(url_for("get", str_x="all"))
+
+
 @app.route("/new")
 @auth.login_required
 def new():

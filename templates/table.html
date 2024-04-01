@@ -23,14 +23,18 @@
         background-color: #f5f5f5;
     }
     button {
-        background-color: black;
-        color: red;
         border: none;
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
+        background-color: lightgray;
+        color: white;
     }
-    button:hover {
+    #del {
+        background-color: black;
+        color: red;
+    }
+    #del:hover{
         background-color: red;
         color: black;
     }
@@ -44,9 +48,12 @@
             <td>{{ entry[2] }}</td>
             <td>{{ entry[3] }}</td>
             <td>{{ entry[4] }}</td>
-            <td><form action="/delete/{{ entry[0] }}" method="post">
-                <button type="submit">X</button>
+            <td style="width: 2%;"><form action="/edit/{{ entry[0] }}" method="post">
+                <button id="edit" type="submit">Edit</button>
             </form></td>
+            <td style="width: 2%;"><form action="/delete/{{ entry[0] }}" method="post">
+                <button id="del" type="submit">X</button>
+            </form></td>            
         </tr>
         {% endfor %}
     </table>

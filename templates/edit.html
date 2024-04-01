@@ -40,16 +40,16 @@
 </head>
 <body>
     <h2>Add Entry</h2>
-    <form action="/add" method="post">
+    <form action="/update/{{entry[0]}}" method="post">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="name" name="name" value={{entry[1]}} required><br>
         <label for="comment">Comment:</label>
-        <input type="text" id="comment" name="comment" required><br>
+        <input type="text" id="comment" name="comment" value={{entry[2]}} required><br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" value={{entry[3]}} required><br>
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br>
-        <button type="submit">Add</button>
+        <input type="date" id="date" name="date" value={{entry[4]}} required><br>
+        <button type="submit">Update</button>
     </form>
 </body>
 </html>
