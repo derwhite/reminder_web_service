@@ -93,7 +93,7 @@ def add_entry():
         else:
             id = next_index(ids, 1)
         conn.execute(
-            "INSERT INTO entries VALUES ($id, $name, $comment, $email, $date)",
+            "INSERT OR REPLACE INTO entries VALUES ($id, $name, $comment, $email, $date)",
             {"id": id, "name": name, "comment": comment, "email": email, "date": date},
         )
 

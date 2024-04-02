@@ -11,6 +11,9 @@
         flex-wrap: wrap;
         white-space: nowrap;
     }
+    .comment {
+        white-space: normal;
+    }
     td {
         padding: 10px;
         text-align: left;
@@ -48,7 +51,7 @@
         {% for entry in entries %}
         <tr>
             <td>{{ entry[1] }}</td>
-            <td>{{ entry[2] }}</td>
+            <td class="comment">{{ entry[2] }}</td>
             <td>{{ entry[3] }}</td>
             <td>{{ entry[4] }}</td>
             <td style="width: 2%;"><form action="/edit/{{ entry[0] }}" method="post">
