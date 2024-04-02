@@ -10,14 +10,11 @@
         border-collapse: collapse;
         flex-wrap: wrap;
         white-space: nowrap;
-    }
-    .comment {
-        white-space: normal;
-    }
+    } 
     td {
         padding: 10px;
         text-align: left;
-        width: 1em;
+        width: 15%;
     }
     tr:nth-child(even) {
         background-color: #43b6c5;
@@ -44,6 +41,15 @@
         background-color: red;
         color: black;
     }
+    .comment {
+        white-space: normal;
+        width: auto;
+    }
+    .buttons {
+        text-align: center;
+        width: 2%;
+    }
+
 </style>
 </head>
 <body>
@@ -54,10 +60,10 @@
             <td class="comment">{{ entry[2] }}</td>
             <td>{{ entry[3] }}</td>
             <td>{{ entry[4] }}</td>
-            <td style="width: 2%;"><form action="/edit/{{ entry[0] }}" method="post">
+            <td class="buttons"><form action="/edit/{{ entry[0] }}" method="post">
                 <button id="edit" type="submit">Edit</button>
             </form></td>
-            <td style="width: 2%;"><form action="/delete/{{ entry[0] }}" method="post">
+            <td class="buttons"><form action="/delete/{{ entry[0] }}" method="post">
                 <button id="del" type="submit">X</button>
             </form></td>            
         </tr>
